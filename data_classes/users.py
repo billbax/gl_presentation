@@ -6,7 +6,7 @@ import conversion.conversion_functions.create_dataframes as create_df
 from conversion.conversion_defaults.standard_cols import STANDARD_USER_COLS
 from data_classes.custom_fields import CustomFields
 from conversion.conversion_functions.isin_check import isin_check
-from excel_writers.excel_writer import ExcelWriter
+from excel_writer.excel_writer_class import ExcelWriter
 import validations.errors.check_funcs as check_funcs
 from validations.errors import error_checks
 
@@ -14,7 +14,7 @@ CMAP_PLACEHOLDERS = ["James Carr (Cmap)", "Sarah Jackson (Cmap)", "Danielle Bate
 
 
 class Users:
-    def __init__(self, client_data, system_data):
+    def __init__(self, client_data, system_data, file_path):
         # Create the user dataframe required by the import tool from the lists of default columns
         self.users_df = create_df.create_import_template(import_columns.USERS_COL)
 
@@ -57,13 +57,15 @@ class Users:
             self.users_df[['End Date', "Start Date", "Timesheet Start", "Timesheet Week"]].astype('datetime64[ns]')
 
         # Export dataframes to excel
-        ExcelWriter(excel_file_name="1. Users",
+        ExcelWriter(file_path=file_path,
+                    excel_file_name="1. Users",
                     dataframe_dict={
                         "Users": self.users_df,
                         }
                     )
 
-        ExcelWriter(excel_file_name="8. Custom Fields",
+        ExcelWriter(file_path=file_path,
+                    excel_file_name="8. Custom Fields",
                     dataframe_dict={
                         "User - Custom Fields": self.user_custom_fields.cf_df,
                         }
@@ -71,6 +73,7 @@ class Users:
 
         # Run checks for placeholder values used/data not matching config data
         check_funcs.check_for_placeholders(check_type=error_checks.user_checks, df=self.users_df,
-                                           class_name="Users")
+                                           class_name="Users", file_path=file_path)
 
-        check_funcs.non_config_data(df=self.users_df, system_data=system_data, columns=["Role"])
+        check_funcs.non_config_data(df=self.users_df, system_data=system_data, columns=["Role"],
+                                    file_path=file_path)

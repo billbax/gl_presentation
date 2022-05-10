@@ -4,7 +4,7 @@ import conversion.conversion_defaults.fill_columns as fill_columns
 import conversion.conversion_functions.format_columns as conv_funcs
 import conversion.conversion_functions.create_dataframes as create_df
 from conversion.conversion_functions.isin_check import isin_check
-from excel_writers.excel_writer import ExcelWriter
+from excel_writer.excel_writer_class import ExcelWriter
 import validations.errors.check_funcs as check_funcs
 from validations.errors import error_checks
 
@@ -13,7 +13,7 @@ CMAP_PLACEHOLDERS = ["1000 (Cmap)", "1001 (Cmap)"]
 
 
 class Expenses:
-    def __init__(self, client_data, system_data):
+    def __init__(self, client_data, system_data, file_path):
         # Create the expenses dataframe required by the import tool from the lists of default import columns
         self.expenses_df = create_df.create_import_template(columns=import_columns.EXPENSE_COL)
 
@@ -36,7 +36,8 @@ class Expenses:
                                       check_cols=["Category"])
 
         # Export dataframes to excel
-        ExcelWriter(excel_file_name="10. Expenses",
+        ExcelWriter(file_path=file_path,
+                    excel_file_name="10. Expenses",
                     dataframe_dict={
                         "Expenses": self.expenses_df,
                         }
@@ -44,6 +45,7 @@ class Expenses:
 
         # Run checks for placeholder values/non config internal codes used
         check_funcs.check_for_placeholders(check_type=error_checks.expenses_check, df=self.expenses_df,
-                                           class_name="Expenses")
+                                           class_name="Expenses", file_path=file_path)
 
-        check_funcs.non_config_data(df=self.expenses_df, system_data=system_data, columns=["Category"])
+        check_funcs.non_config_data(df=self.expenses_df, system_data=system_data, columns=["Category"],
+                                    file_path=file_path)

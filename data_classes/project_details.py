@@ -7,7 +7,7 @@ from data_classes.custom_fields import CustomFields
 from conversion.conversion_defaults.standard_cols import STANDARD_PROJ_COLS
 from conversion.conversion_functions.merge_dataframes import merge_dataframes
 from conversion.conversion_functions.isin_check import isin_check
-from excel_writers.excel_writer import ExcelWriter
+from excel_writer.excel_writer_class import ExcelWriter
 import validations.errors.check_funcs as check_funcs
 from validations.errors import error_checks
 
@@ -15,7 +15,7 @@ CMAP_PLACEHOLDERS = ["1000 (Cmap)", "1001 (Cmap)", "1002 (Cmap)"]
 
 
 class ProjectDetails:
-    def __init__(self, client_data, user_validation, comp_validation, cont_validation, system_data):
+    def __init__(self, client_data, user_validation, comp_validation, cont_validation, system_data, file_path):
         # Create the fee estimator dataframes required by the import tool from the lists of default columns
         self.proj_det_df = create_df.create_import_template(import_columns.PROJ_DET_COL)
 
@@ -67,13 +67,15 @@ class ProjectDetails:
 
 
         # Export dataframes to excel
-        ExcelWriter(excel_file_name="13. Projects",
+        ExcelWriter(file_path=file_path,
+                    excel_file_name="13. Projects",
                     dataframe_dict={
                         "Projects": self.proj_det_df,
                         }
                     )
 
-        ExcelWriter(excel_file_name="8. Custom Fields",
+        ExcelWriter(file_path=file_path,
+                    excel_file_name="8. Custom Fields",
                     dataframe_dict={
                         "Project - Custom Fields": self.project_custom_fields.cf_df,
                         }
@@ -81,6 +83,7 @@ class ProjectDetails:
 
         # Run checks for placeholder values/non config project types/sector used
         check_funcs.check_for_placeholders(check_type=error_checks.proj_det_check, df=self.proj_det_df,
-                                           class_name="Project Details")
+                                           class_name="Project Details", file_path=file_path)
 
-        check_funcs.non_config_data(df=self.proj_det_df, system_data=system_data, columns=["Project Type", "Sector"])
+        check_funcs.non_config_data(df=self.proj_det_df, system_data=system_data, columns=["Project Type", "Sector"],
+                                    file_path=file_path)

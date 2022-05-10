@@ -4,7 +4,7 @@ import conversion.conversion_defaults.fill_columns as fill_columns
 import conversion.conversion_functions.format_columns as conv_funcs
 import conversion.conversion_functions.create_dataframes as create_df
 from conversion.conversion_functions.isin_check import isin_check
-from excel_writers.excel_writer import ExcelWriter
+from excel_writer.excel_writer_class import ExcelWriter
 import validations.errors.check_funcs as check_funcs
 from validations.errors import error_checks
 
@@ -12,7 +12,7 @@ CMAP_PLACEHOLDERS = ["1000 (Cmap)", "1001 (Cmap)", "1002 (Cmap)"]
 
 
 class SalesInvoices:
-    def __init__(self, client_data, project_validation, stage_validation):
+    def __init__(self, client_data, project_validation, stage_validation, file_path):
 
         # Create the invoice dataframes required by the import tool from the list of default columns
         self.invoice_top_df = create_df.create_import_template(columns=import_columns.INVOICE_COL)
@@ -23,7 +23,7 @@ class SalesInvoices:
 
         # Remove all CMap example rows based on the (Cmap) cell identifier
         self.invoice_data_rec = create_df.remove_placeholders(data=self.invoice_data_rec, column_header="Project Number",
-                                                              placeholders=CMAP_PLACEHOLDERS)
+                                                              placeholders=CMAP_PLACEHOLDERS, )
 
         # Remap the columns received into the dataframes for import using the dicts in remapping_dict
         self.invoice_breakdown_df = conv_funcs.remap_columns(df=self.invoice_breakdown_df, data=self.invoice_data_rec,
@@ -48,10 +48,10 @@ class SalesInvoices:
                                                        mapping_dict=remapping_dicts.INVOICE_MAP)
 
         # Concatenate Project/Invoice Number to create a 'Combined' column to merge across datasheets
-        self.invoice_breakdown_df["Combined"] = self.invoice_breakdown_df[["Project", "Invoice Number"]]\
+        self.invoice_breakdown_df["Combined"] = self.invoice_breakdown_df[["Project", "Date", "Invoice Number"]]\
             .apply(lambda row: " ".join(row.values.astype(str)), axis=1)
 
-        self.invoice_top_df["Combined"] = self.invoice_top_df[["Project", "Invoice Number"]]\
+        self.invoice_top_df["Combined"] = self.invoice_top_df[["Project", "Date", "Invoice Number"]]\
             .apply(lambda row: " ".join(row.values.astype(str)), axis=1)
         # Drop duplicates in invoice_top_df to get sum alone
         self.invoice_top_df.drop_duplicates(subset="Combined", inplace=True)
@@ -78,7 +78,8 @@ class SalesInvoices:
                                                       fill_column_dict=fill_columns.NULL_INV_TOP)
 
         # Export dataframes to excel
-        ExcelWriter(excel_file_name="6. Sales Invoices",
+        ExcelWriter(file_path=file_path,
+                    excel_file_name="6. Sales Invoices",
                     dataframe_dict={
                         "Sales Invoices": self.invoice_top_df,
                         "Sales Invoices Detail": self.invoice_breakdown_df,
@@ -87,6 +88,7 @@ class SalesInvoices:
 
         # Run checks for placeholder values used
         check_funcs.check_for_placeholders(check_type=error_checks.inv_top_check, df=self.invoice_top_df,
-                                           class_name="Invoices")
+                                           class_name="Invoices", file_path=file_path)
 
-        check_funcs.check_for_placeholders(check_type=error_checks.inv_det_check, df=self.invoice_breakdown_df)
+        check_funcs.check_for_placeholders(check_type=error_checks.inv_det_check, df=self.invoice_breakdown_df,
+                                           file_path=file_path)

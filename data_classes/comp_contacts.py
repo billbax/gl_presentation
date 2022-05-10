@@ -5,7 +5,7 @@ import conversion.conversion_functions.format_columns as conv_funcs
 import conversion.conversion_functions.create_dataframes as create_df
 from data_classes.custom_fields import CustomFields
 from conversion.conversion_defaults.standard_cols import STANDARD_COMP_COLS, STANDARD_CONT_COLS
-from excel_writers.excel_writer import ExcelWriter
+from excel_writer.excel_writer_class import ExcelWriter
 import validations.errors.check_funcs as check_funcs
 from validations.errors import error_checks
 
@@ -13,7 +13,7 @@ CMAP_PLACEHOLDERS = ["CMAP Software (Cmap)", "XYZ Ltd (Cmap)", "ABC Plc (Cmap)"]
 
 
 class CompAndContacts:
-    def __init__(self, client_data):
+    def __init__(self, client_data, file_path):
         # Create the company/contact dataframes required by the import tool from the lists of default import columns
         self.company_df = create_df.create_import_template(columns=import_columns.COMP_COL)
         self.contact_df = create_df.create_import_template(columns=import_columns.CONT_COL)
@@ -50,14 +50,16 @@ class CompAndContacts:
                                                   standard_cols=STANDARD_CONT_COLS)
 
         # Export dataframes to excel
-        ExcelWriter(excel_file_name="2. Companies & Contacts",
+        ExcelWriter(file_path=file_path,
+                    excel_file_name="2. Companies & Contacts",
                     dataframe_dict={
                         "Company": self.company_df,
                         "Contact": self.contact_df,
                         }
                     )
 
-        ExcelWriter(excel_file_name="8. Custom Fields",
+        ExcelWriter(file_path=file_path,
+                    excel_file_name="8. Custom Fields",
                     dataframe_dict={
                         "Account - Custom Fields": self.company_custom_fields.cf_df,
                         "Contact - Custom Fields": self.contact_custom_fields.cf_df,
@@ -66,6 +68,6 @@ class CompAndContacts:
 
         # Run checks for placeholder values used
         check_funcs.check_for_placeholders(check_type=error_checks.comp_check, df=self.company_df,
-                                           class_name="Companies & Contacts")
+                                           class_name="Companies & Contacts", file_path=file_path)
 
-        check_funcs.check_for_placeholders(check_type=error_checks.cont_check, df=self.contact_df)
+        check_funcs.check_for_placeholders(check_type=error_checks.cont_check, df=self.contact_df, file_path=file_path)

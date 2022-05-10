@@ -3,13 +3,13 @@ import conversion.conversion_defaults.remapping_dicts as remapping_dicts
 import conversion.conversion_defaults.fill_columns as fill_columns
 import conversion.conversion_functions.format_columns as conv_funcs
 import conversion.conversion_functions.create_dataframes as create_df
-from excel_writers.excel_writer import ExcelWriter
+from excel_writer.excel_writer_class import ExcelWriter
 
 CMAP_PLACEHOLDERS = ["James Carr (Cmap)", "Sarah Jackson (Cmap)", "Danielle Bates (Cmap)", "Daniel May (Cmap)"]
 
 
 class HolidayAllowance:
-    def __init__(self, client_data):
+    def __init__(self, client_data, file_path):
         # Create the holiday allowance dataframe required by the import tool from the lists of default columns
         self.holiday_allow_df = create_df.create_import_template(import_columns.HOL_ALLOW_COL)
 
@@ -32,9 +32,9 @@ class HolidayAllowance:
         self.holiday_allow_df = conv_funcs.fill_columns(df=self.holiday_allow_df,
                                                         fill_column_dict=fill_columns.NULL_HOLIDAY_ALLOW)
 
-
         # Export dataframes to excel
-        ExcelWriter(excel_file_name="16. Holiday Allowance",
+        ExcelWriter(file_path=file_path,
+                    excel_file_name="16. Holiday Allowance",
                     dataframe_dict={
                         "Holiday Allowances": self.holiday_allow_df,
                         }

@@ -4,7 +4,7 @@ import conversion.conversion_defaults.fill_columns as fill_columns
 import conversion.conversion_functions.format_columns as conv_funcs
 import conversion.conversion_functions.create_dataframes as create_df
 from conversion.conversion_functions.merge_dataframes import merge_dataframes
-from excel_writers.excel_writer import ExcelWriter
+from excel_writer.excel_writer_class import ExcelWriter
 import validations.errors.check_funcs as check_funcs
 from validations.errors import error_checks
 
@@ -12,7 +12,7 @@ CMAP_PLACEHOLDERS = ["1000 (Cmap)", "1001 (Cmap)", "1002 (Cmap)"]
 
 
 class ProjectFees:
-    def __init__(self, client_data, project_validation):
+    def __init__(self, client_data, project_validation, file_path):
         # Create the fee estimator dataframes required by the import tool from the lists of default columns
         self.fe_top_lvl_df = create_df.create_import_template(import_columns.FE_COL)
         self.fe_tab_df = create_df.create_import_template(import_columns.FE_TAB_COL)
@@ -60,6 +60,9 @@ class ProjectFees:
         self.fe_task_df = conv_funcs.fill_columns(df=self.fe_task_df, fill_column_dict=fill_columns.NULL_FE_TASK)
         self.fe_externals_df = conv_funcs.fill_columns(df=self.fe_externals_df, fill_column_dict=fill_columns.NULL_FE_EXT)
 
+        # Convert duration from weeks to days
+        self.fe_task_df["Duration"] = self.fe_task_df["Duration"] * 7
+
         # Concatenate project/stage to create a 'Stage Validation' column to allow validation/merges in other classes
         self.fe_section_df["Stage Validation"] = self.fe_section_df[["Project", "Section Name"]] \
             .apply(lambda row: " ".join(row.values.astype(str)), axis=1)
@@ -68,7 +71,8 @@ class ProjectFees:
         self.fe_section_df["Stage Type"].replace({"Y": "Bid Stage"}, inplace=True)
 
         # Export dataframes to excel
-        ExcelWriter(excel_file_name="11. Fee Estimator",
+        ExcelWriter(file_path=file_path,
+                    excel_file_name="11. Fee Estimator",
                     dataframe_dict={
                         "Fee Estimator": self.fe_top_lvl_df,
                         "Fee Estimator Tabs": self.fe_tab_df,
@@ -80,4 +84,4 @@ class ProjectFees:
 
         # Run checks for placeholder values/non config internal codes used
         check_funcs.check_for_placeholders(check_type=error_checks.fee_estimator_check, df=self.fe_task_df,
-                                           class_name="Fee Estimator")
+                                           class_name="Fee Estimator", file_path=file_path)

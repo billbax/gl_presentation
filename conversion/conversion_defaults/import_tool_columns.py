@@ -78,7 +78,7 @@ INVOICE_DET_COL = ['Project', 'Date', 'Invoice Number', 'Information', 'Net', 'E
                    'Budget Section',  'Combined', 'Budget External', 'Notes', 'More Information']
 
 TIME_COL = ['Date', 'Project', 'Internal Code', 'Internal Code Exists', 'Person', 'Person Exists', 'Budget Tab', 'Budget Section',
-            'Combined', 'Budget Task', 'Hours', 'Notes', 'Billable', 'Billable Hours', 'Invoice', 'Overtime',
+            'Budget Task', 'Hours', 'Notes', 'Billable', 'Billable Hours', 'Invoice', 'Overtime',
             'Paid Overtime', 'Paid Overtime Approved By', 'Approved', 'Approved By', 'Date Approved',
             'Recognised', 'Recognised Submitted Date', 'Recognised Hours', 'Recognised Submitted By',
             'Recognised Notes', 'Hours Recognised', 'Date Recognised', 'Work Activity']

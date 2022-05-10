@@ -5,7 +5,7 @@ import conversion.conversion_functions.format_columns as conv_funcs
 import conversion.conversion_functions.create_dataframes as create_df
 from conversion.conversion_functions.merge_dataframes import merge_dataframes
 from conversion.conversion_functions.isin_check import isin_check
-from excel_writers.excel_writer import ExcelWriter
+from excel_writer.excel_writer_class import ExcelWriter
 import validations.errors.check_funcs as check_funcs
 from validations.errors import error_checks
 
@@ -13,7 +13,7 @@ CMAP_PLACEHOLDERS = ["James Carr (Cmap)", "Sarah Jackson (Cmap)", "Danielle Bate
 
 
 class ProjectTime:
-    def __init__(self, client_data, user_validation, stage_validation):
+    def __init__(self, client_data, user_validation, stage_validation, file_path):
         # Create the project time dataframe required by the import tool from the lists of default columns
         self.project_time_df = create_df.create_import_template(import_columns.TIME_COL)
 
@@ -51,7 +51,8 @@ class ProjectTime:
         self.project_time_df = conv_funcs.fill_columns(df=self.project_time_df, fill_column_dict=fill_columns.NULL_PROJ_TIME)
 
         # Export dataframes to excel
-        ExcelWriter(excel_file_name="5. Project Time",
+        ExcelWriter(file_path=file_path,
+                    excel_file_name="5. Project Time",
                     dataframe_dict={
                         "Timesheets": self.project_time_df,
                         }
@@ -59,4 +60,4 @@ class ProjectTime:
 
         # Run checks for placeholder values used
         check_funcs.check_for_placeholders(check_type=error_checks.proj_time_check, df=self.project_time_df,
-                                           class_name="Project Time")
+                                           class_name="Project Time", file_path=file_path)
