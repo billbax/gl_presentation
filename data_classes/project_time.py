@@ -28,6 +28,9 @@ class ProjectTime:
         self.project_time_df = conv_funcs.remap_columns(df=self.project_time_df, data=self.project_time_rec,
                                                         mapping_dict=remapping_dicts.TIME_MAP)
 
+        # Fill any null mandatory columns using the placeholder dict from fill_columns
+        self.project_time_df = conv_funcs.fill_columns(df=self.project_time_df, fill_column_dict=fill_columns.NULL_PROJ_TIME)
+
         # Concatenate project/stage to compare against fee estimator breakdown data
         self.project_time_df["Time - Stage"] = self.project_time_df[["Project", "Budget Section"]] \
             .apply(lambda row: " ".join(row.values.astype(str)), axis=1)
@@ -46,9 +49,6 @@ class ProjectTime:
         # Check if stage & project exist in project data received
         self.project_time_df = isin_check(df=self.project_time_df, validation_df=stage_validation,
                                           validation_col="Stage Validation", check_cols=["Time - Stage"])
-
-        # Fill any null mandatory columns using the placeholder dict from fill_columns
-        self.project_time_df = conv_funcs.fill_columns(df=self.project_time_df, fill_column_dict=fill_columns.NULL_PROJ_TIME)
 
         # Export dataframes to excel
         ExcelWriter(file_path=file_path,

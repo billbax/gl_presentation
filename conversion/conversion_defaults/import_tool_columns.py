@@ -10,7 +10,7 @@ USERS_COL = ["Live User", "Firstname", "Lastname", "Person", "Email", "Office", 
              "Show Overtime Panel", "Locale", "TimeZone"
              ]
 
-USER_FIG_COL = ["Person", "Role", "Start Date", "End Date", "Working Hours", "Productivity Target", "Cost Rate"]
+USER_FIG_COL = ["Person", "Role", "Role Exists", "Start Date", "End Date", "Working Hours", "Productivity Target", "Cost Rate"]
 
 CLASH_COL = ["Person", "Clashes With"]
 
@@ -44,6 +44,8 @@ PROJ_DET_COL = ["Fee Type", "Code", "Title", "Office", "Business Unit", "Currenc
                 "Placeholder Billing Companies", "Placeholder Default Invoice To"]
 
 PO_COL = ["PO Number", "Company", "Currency", "Amount"]
+
+ACCOUNT_PO_COL = ["PO Number", "Company", "Currency", "Amount", "Start Date", "End Date"]
 
 FE_COL = ["Project", "Budget Type", "AEC Detail Level", "Rate",
           "Construction Value", "Fee Percentage", "Our Fee", "Gross Fee",

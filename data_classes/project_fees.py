@@ -19,6 +19,8 @@ class ProjectFees:
         self.fe_section_df = create_df.create_import_template(import_columns.FE_SECT_COL)
         self.fe_task_df = create_df.create_import_template(import_columns.FE_TASK_COL)
         self.fe_externals_df = create_df.create_import_template(import_columns.FE_EXT_COL)
+        self.fe_units_df = create_df.create_import_template(import_columns.FE_UNITS_COL)
+        self.fe_adjustments_df = create_df.create_import_template(import_columns.FE_ADJUST_COL)
 
         # Extract the fee estimator data from the client data sheet received
         self.fee_data_received = create_df.read_sheet(data=client_data, sheet_name="Top Down Project Fees")
@@ -74,11 +76,13 @@ class ProjectFees:
         ExcelWriter(file_path=file_path,
                     excel_file_name="11. Fee Estimator",
                     dataframe_dict={
-                        "Fee Estimator": self.fe_top_lvl_df,
+                        "Fee Estimators": self.fe_top_lvl_df,
                         "Fee Estimator Tabs": self.fe_tab_df,
                         "Fee Estimator Sections": self.fe_section_df,
                         "Fee Estimator Tasks": self.fe_task_df,
                         "Fee Estimator Externals": self.fe_externals_df,
+                        "Fee Estimator Units": self.fe_units_df,
+                        "Fee Estimator Adjustments": self.fe_adjustments_df,
                         }
                     )
 

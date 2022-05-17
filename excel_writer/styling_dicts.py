@@ -1,5 +1,6 @@
 colour_dict = {
     "Users": ["Y", "N", "Academy Only", "GBP"],
+    "User Figures": [],
     "Company": ["Pending", "N"],
     "Contact": ["Pending", "N"],
     "Holidays": ["Holiday"],
@@ -19,12 +20,13 @@ colour_dict = {
                }
 
 highlight_dict = {
-    "Users": ["My First User", "placeholder@cmap.com", "Pending", "0.00"],
+    "Users": ["My First User", "placeholder@cmap.com", "NON-CHARGEABLE ADMIN", "0.00", "No", "EMPLOYEE"],
+    "User Figures": ["No", "0.00"],
     "Company": ["PENDING"],
     "Contact": ["PENDING"],
     "Holidays": ["Holiday"],
     "Budget Rates": [],
-    "Timesheets": ["No", "PENDING"],
+    "Timesheets": ["No", "NON-CHARGEABLE ADMIN"],
     "Sales Invoices": ["INVOICED"],
     "Sales Invoices Detail": ["No"],
     "Expenses": ["No", "Retention", "Pre-CMap"],

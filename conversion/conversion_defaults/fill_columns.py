@@ -31,9 +31,9 @@ NULL_CONTACTS = {"Company Name": "PENDING", "Main Contact (Y/N)": "N", "Accounts
                  "First Name": "Pending", "Last Name": "Completion", }
 
 NULL_PROJ_TIME = {"Overtime": "N", "Budget Tab": "Project Fees", "Person": "Pre CMap",
-                  "Budget Section": "Pre-CMap", "Budget Task": "Pre-CMap", "Role": "PENDING"}
+                  "Budget Section": "Pre-CMap", "Budget Task": "Pre-CMap", "Role": "NON-CHARGEABLE ADMIN"}
 
-NULL_INT_TIME = {"Overtime": "N", "Role": "PENDING"}
+NULL_INT_TIME = {"Overtime": "N", "Role": "NON-CHARGEABLE ADMIN"}
 
 NULL_EXPENSES = {"Claim Name": "Pre-CMap", "Status": "Paid", "Description": "Imported", "Exchange Rate": "1",
                  "Receipt": "N", "Reimburse": "N", "Imported": "Y", "Person": "My First User",
@@ -42,12 +42,12 @@ NULL_EXPENSES = {"Claim Name": "Pre-CMap", "Status": "Paid", "Description": "Imp
 NULL_PURCHASE_INV = {"Purchase Invoice Category": "Pending", "Status": "Received", "IsApproved": "Y",
                      "Approval Status": "Paid", }
 
-NULL_USERS = {"Live User": "Y", "Start Date": "04/01/2015", "Security Group": "Academy Only", "Currency": "GBP",
+NULL_USERS = {"Live User": "Y", "Start Date": "03/01/2022", "Security Group": "Academy Only", "Currency": "GBP",
               "Timesheet Week": (datetime.today() - timedelta(days=datetime.today().weekday())).strftime("%d %B %Y"),
-              "Timesheet Start": "04/01/2021", "Auto Populate timesheet with time off": "N",
+              "Timesheet Start": "03/01/2022", "Auto Populate timesheet with time off": "N",
               "Autopopulate Timesheet": "N", "Show Overtime Panel": "N", "Nordic Overtime": "N",
-              "Line Manager": "My First User", "Working Hours Per Week": "40", "Productivity Target": "0",
-              "Cost Rate": "0.00", "Email": "placeholder@cmap.com", "Role": "Pending"}
+              "Line Manager": "My First User", "Working Hours Per Week": "0.00", "Productivity Target": "0.00",
+              "Cost Rate": "0.00", "Email": "placeholder@cmap.com", "Role": "NON-CHARGEABLE ADMIN", "User Type": "EMPLOYEE"}
 
 NULL_HOLIDAY = {"Approved": "Y"}
 

@@ -9,6 +9,10 @@ USERS_MAP = {"Live User": "Live User (Y/N)", "Firstname": "First Name", "Lastnam
              "Exclude Public Holidays": "Exclude Public Holidays (Y/N)", "Finance System Code": "Supplier Code",
              "Job Title": "Job Title", "Person": "Person", }
 
+USER_FIG_MAP = {"Person": "Person", "Role": "Role", "Role Exists": "Role Exists", "Start Date": "Start Date", "End Date": "End Date",
+                "Working Hours": "Working Hours Per Week", "Productivity Target": "Productivity Target",
+                "Cost Rate": "Cost Rate"}
+
 HOL_MAP = {"Person": "Person", "Holiday Code": "Time Off Type", "Date": "Date", "Days": "Duration",
            "Actual Duration": "Duration", "Approved": "Status", "Notes": "Notes",
            "(TEMP) AM/PM": "AM or PM (Where half days leave occurs)",

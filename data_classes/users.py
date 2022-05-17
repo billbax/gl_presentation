@@ -17,9 +17,15 @@ class Users:
     def __init__(self, client_data, system_data, file_path):
         # Create the user dataframe required by the import tool from the lists of default columns
         self.users_df = create_df.create_import_template(import_columns.USERS_COL)
+        self.user_fig_df = create_df.create_import_template(import_columns.USER_FIG_COL)
+        self.clash_df = create_df.create_import_template(import_columns.CLASH_COL)
+        self.delegate_df = create_df.create_import_template(import_columns.USER_DELEGATES_COL)
 
         # Extract the user data from the client data sheet received
         self.user_data_rec = create_df.read_sheet(data=client_data, sheet_name="Users")
+        # Remove whitespace from around names
+        self.user_data_rec["First Name"] = self.user_data_rec["First Name"].str.strip()
+        self.user_data_rec["Last Name"] = self.user_data_rec["Last Name"].str.strip()
 
         # Concatenate first/last name to create a 'Person' to allow validation/merges in other classes
         self.user_data_rec["Person"] = self.user_data_rec[["First Name", "Last Name"]]\
@@ -48,6 +54,10 @@ class Users:
         self.users_df = isin_check(df=self.users_df, validation_df=system_data, validation_col="Role",
                                    check_cols=["Role"])
 
+        # Check if line manager/time off approver/expense approver exist
+        self.users_df = isin_check(df=self.users_df, validation_df=self.users_df, validation_col="Person",
+                                   check_cols=["Line Manager", "Time Off Approver", "Expenses Approver"])
+
         # Check if any custom fields are present and create a dataframe if True
         self.user_custom_fields = CustomFields(client_data=self.user_data_rec, len_check=1,
                                                standard_cols=STANDARD_USER_COLS)
@@ -56,11 +66,18 @@ class Users:
         self.users_df[['End Date', "Start Date", "Timesheet Start", "Timesheet Week"]] = \
             self.users_df[['End Date', "Start Date", "Timesheet Start", "Timesheet Week"]].astype('datetime64[ns]')
 
+        # Map to user figures sheet
+        self.user_fig_df = conv_funcs.remap_columns(df=self.user_fig_df, data=self.users_df,
+                                                    mapping_dict=remapping_dicts.USER_FIG_MAP)
+
         # Export dataframes to excel
         ExcelWriter(file_path=file_path,
                     excel_file_name="1. Users",
                     dataframe_dict={
                         "Users": self.users_df,
+                        "User Figures": self.user_fig_df,
+                        "Time Off Clash Groups": self.clash_df,
+                        "User Delegates": self.delegate_df,
                         }
                     )
 

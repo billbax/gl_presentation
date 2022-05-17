@@ -9,6 +9,7 @@ def isin_check(df, validation_df, check_cols, validation_col=None):
             df[f"{col} Exists"] = df[col].isin(validation_df[validation_col])
         # if validation col not set, lookup col from for loop in validation df
         except KeyError:
+            print(f"isin_check KeyError for {col}")
             df[f"{col} Exists"] = df[col].isin(validation_df[col])
 
         # Replace boolean values with yes/no

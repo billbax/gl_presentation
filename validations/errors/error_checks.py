@@ -1,4 +1,4 @@
-user_checks = {"Role": "Pending", "Line Manager": "My First User", "Email": "placeholder@cmap.com", "Cost Rate": "0.00"}
+user_checks = {"Role": "NON-CHARGEABLE ADMIN", "Line Manager": "My First User", "Email": "placeholder@cmap.com", "Cost Rate": "0.00"}
 
 comp_check = {"Address Description": "Pending"}
 cont_check = {"Company Name": "PENDING", "First Name": "Pending"}

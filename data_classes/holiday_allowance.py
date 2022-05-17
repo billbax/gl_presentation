@@ -15,6 +15,9 @@ class HolidayAllowance:
 
         # Extract the holiday allowance data from the client data sheet received
         self.holiday_data_rec = create_df.read_sheet(data=client_data, sheet_name="Users")
+        # Remove whitespace from around names
+        self.holiday_data_rec["First Name"] = self.holiday_data_rec["First Name"].str.strip()
+        self.holiday_data_rec["Last Name"] = self.holiday_data_rec["Last Name"].str.strip()
 
         # Concatenate the first/last name columns to create a full name column
         self.holiday_data_rec["Person"] = self.holiday_data_rec[["First Name", "Last Name"]]\
@@ -27,6 +30,9 @@ class HolidayAllowance:
         # Remap the columns received into the dataframes for import using the dicts in remapping_dicts
         self.holiday_allow_df = conv_funcs.remap_columns(df=self.holiday_allow_df, data=self.holiday_data_rec,
                                                          mapping_dict=remapping_dicts.HOL_ALLOWANCE_MAP)
+
+        # Drop any users where no allowance specified
+        self.holiday_allow_df = self.holiday_allow_df[self.holiday_allow_df["Days"].notna()]
 
         # Fill any null mandatory columns using the placeholder dict from fill_columns
         self.holiday_allow_df = conv_funcs.fill_columns(df=self.holiday_allow_df,

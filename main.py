@@ -29,10 +29,10 @@ def open_xlsx_doc(file_name):
 
 # client_name = input("What is the clients name? ")
 
-Testing = False
+Testing = True
 
 if Testing:
-    client_name = "zz Test"
+    client_name = "Ayre Chamberlain Gaunt"
     file_path = f"C:/Users/Bill/Desktop/Clients/{client_name}"
     config_data = pd.ExcelFile("Config.xlsx")
     system_df = pd.read_excel(config_data, sheet_name="Config")
@@ -40,6 +40,8 @@ else:
     client_name = input("What is the clients name? ")
     file_path = f"C:/Users/Bill/Desktop/Clients/{client_name}"
     system_df = create_driver(system_id=input("What is the clients sysadmin ID? "))
+    print(system_df["Internal Code"])
+
 
 # Open all client files to create a pandas instance that can be passed to the data_classes for conversion.
 # If file not found returns an empty form with matching column names to allow script to continue.
@@ -69,7 +71,7 @@ project_fees = ProjectFees(client_data=live_proj_data, project_validation=proj_d
 
 rate_cards = RateCards(client_data=live_proj_data, file_path=file_path)
 
-project_pos = ProjectPOs(client_data=live_proj_data, file_path=file_path)
+project_pos = ProjectPOs(client_data=live_proj_data, proj_data_rec=proj_details.proj_det_rec, file_path=file_path)
 
 project_time = ProjectTime(client_data=project_time_data, user_validation=users.users_df,
                            stage_validation=project_fees.fe_section_df, file_path=file_path)

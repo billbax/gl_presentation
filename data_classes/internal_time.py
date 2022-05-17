@@ -40,6 +40,8 @@ class InternalTime:
         self.internal_time_df.rename({"Person Exists": "Internal - Person Exists"}, axis=1, inplace=True)
 
         # Check if internal code is set up in system
+        print(system_data["Internal Code"])
+
         self.internal_time_df = isin_check(df=self.internal_time_df, validation_df=system_data,
                                            validation_col=["Internal Code"], check_cols=["Internal Code"])
 
