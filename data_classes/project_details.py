@@ -38,6 +38,8 @@ class ProjectDetails:
         # Fill any null mandatory columns using the placeholder dict from fill_columns
         self.proj_det_df = conv_funcs.fill_columns(df=self.proj_det_df, fill_column_dict=fill_columns.NULL_PROJ_DET)
 
+        # If project 'Status' == 'Live Project', populate 'Won By' & 'Date Won' columns
+
         # If project 'Status' == 'Closed Project', populate 'Closed By' & 'Date Closed' columns
         self.proj_det_df["Closed By"].where(self.proj_det_df["Status"] != "Closed Project",
                                             self.proj_det_df["Project Manager"], inplace=True)
@@ -64,7 +66,6 @@ class ProjectDetails:
         # Check if project type/sector exist within the system
         self.proj_det_df = isin_check(df=self.proj_det_df, validation_df=system_data,
                                       check_cols=["Project Type", "Sector"])
-
 
         # Export dataframes to excel
         ExcelWriter(file_path=file_path,

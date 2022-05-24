@@ -13,6 +13,10 @@ USER_FIG_MAP = {"Person": "Person", "Role": "Role", "Role Exists": "Role Exists"
                 "Working Hours": "Working Hours Per Week", "Productivity Target": "Productivity Target",
                 "Cost Rate": "Cost Rate"}
 
+TIME_USER_FIG_MAP = {"Person": "Person", "Role": "Role Name", "Start Date": "Start Date", "End Date": "End Date",
+                     "Cost Rate": "Actual Hourly Cost Rate", "Working Hours": "Weekly Working Hours",
+                     "Productivity Target": "Productivity Target"}
+
 HOL_MAP = {"Person": "Person", "Holiday Code": "Time Off Type", "Date": "Date", "Days": "Duration",
            "Actual Duration": "Duration", "Approved": "Status", "Notes": "Notes",
            "(TEMP) AM/PM": "AM or PM (Where half days leave occurs)",

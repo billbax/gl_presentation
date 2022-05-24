@@ -36,7 +36,11 @@ class SalesInvoices:
         # Fill any null mandatory columns using the placeholder dict from fill_columns
         self.invoice_breakdown_df = conv_funcs.fill_columns(df=self.invoice_breakdown_df, fill_column_dict=fill_columns.NULL_INV_DET)
 
-        # Check if stage & project exists in project data received
+        # Check if project exists in project data received
+        self.invoice_breakdown_df = isin_check(df=self.invoice_breakdown_df, validation_df=stage_validation,
+                                               check_cols=["Project"])
+
+        # Check if stage exists in project data received
         self.invoice_breakdown_df = isin_check(df=self.invoice_breakdown_df, validation_df=stage_validation,
                                                validation_col="Stage Validation", check_cols=["Stage"])
 
@@ -53,6 +57,7 @@ class SalesInvoices:
 
         self.invoice_top_df["Combined"] = self.invoice_top_df[["Project", "Date", "Invoice Number"]]\
             .apply(lambda row: " ".join(row.values.astype(str)), axis=1)
+
         # Drop duplicates in invoice_top_df to get sum alone
         self.invoice_top_df.drop_duplicates(subset="Combined", inplace=True)
 

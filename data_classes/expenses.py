@@ -13,7 +13,7 @@ CMAP_PLACEHOLDERS = ["1000 (Cmap)", "1001 (Cmap)"]
 
 
 class Expenses:
-    def __init__(self, client_data, system_data, file_path):
+    def __init__(self, client_data, system_data, project_validation, file_path):
         # Create the expenses dataframe required by the import tool from the lists of default import columns
         self.expenses_df = create_df.create_import_template(columns=import_columns.EXPENSE_COL)
 
@@ -34,6 +34,10 @@ class Expenses:
         # Check if expense category is set up within the system
         self.expenses_df = isin_check(df=self.expenses_df, validation_df=system_data,
                                       check_cols=["Category"])
+
+        # Check if project included in projects sheet received
+        self.expenses_df = isin_check(df=self.expenses_df, validation_df=project_validation,
+                                      check_cols=["Project"])
 
         # Export dataframes to excel
         ExcelWriter(file_path=file_path,

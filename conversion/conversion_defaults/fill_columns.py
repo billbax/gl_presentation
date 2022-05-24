@@ -13,7 +13,7 @@ NULL_FE_TASK = {"Tab Name": "Project Fees", "Approved": "N", "Locked": "N", "Exp
                 "Retention": "0.00", "Percentage Complete": "0.00", "Start Date": "01 JANUARY 2022",
                 "Duration": "1.00", "Probability": "100.00", "Workstage Fee Type": "FIXED FEE", "Our Fee": "0.00"}
 
-NULL_FE_EXT = {"Tab Name": "Project Fees", "Billing Type": "BILL AS SCHEDULED"}
+NULL_FE_EXT = {"Tab Name": "Project Fees", "Billing Type": "BILL AS SCHEDULED", "External Type": "Consultant"}
 
 NULL_PROJ_DET = {"Fee Type": "AEC", "Status": "LIVE PROJECT", "Probability": "100", "Private": "N",
                  "Project Type": "Pre-CMap", "Sector": "Pre-CMap", "Lead Source": "Pre-CMap",
@@ -25,7 +25,7 @@ NULL_INV_TOP = {"Invoice Number": "Pre-CMap", "Description": "Pre-CMap", "Date":
 
 NULL_INV_DET = {"Invoice Number": "Pre-CMap", "Budget Section": "Pre-CMap", "Date": "31/12/2021"}
 
-NULL_COMPANY = {"Company Name": "PENDING", "Address Description": "Pending"}
+NULL_COMPANY = {"Company Name": "PENDING", "Address Description": "Pending", "Invoice Address": "N"}
 
 NULL_CONTACTS = {"Company Name": "PENDING", "Main Contact (Y/N)": "N", "Accounts Contact (Y/N)": "N",
                  "First Name": "Pending", "Last Name": "Completion", }

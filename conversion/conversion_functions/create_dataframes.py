@@ -8,6 +8,7 @@ def create_import_template(columns):
 def read_sheet(data, sheet_name, skip_rows=1):
     try:
         sheet_data = pd.read_excel(io=data, sheet_name=sheet_name, skiprows=skip_rows)
+        sheet_data = sheet_data.dropna(how="all")
         return sheet_data
     except ValueError:
         return pd.DataFrame()

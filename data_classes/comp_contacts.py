@@ -54,7 +54,7 @@ class CompAndContacts:
                     excel_file_name="2. Companies & Contacts",
                     dataframe_dict={
                         "Company": self.company_df,
-                        "Contact": self.contact_df,
+                        "Contacts": self.contact_df,
                         }
                     )
 

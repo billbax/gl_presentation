@@ -25,7 +25,7 @@ HOL_ALLOW_COL = ["Person", "Holiday Code", "Year", "Days", "Notes", "Is Accrual"
 COMP_COL = ['Company Name', 'Parent Company', 'Telephone', 'Fax', 'Website', 'More Information',
             'Address Description', 'Address line 1', 'Address line 2', 'Address line 3', 'Town/City',
             'County', 'Postcode', 'Country', 'Account Code', 'Supplier Code', 'Payment Terms', 'Tags',
-            'Company Owner', 'Twitter', 'LinkedIn', 'VAT Number']
+            'Company Owner', 'Twitter', 'LinkedIn', 'VAT Number', "Invoice Address"]
 
 CONT_COL = ['Company Name', 'First Name', 'Last Name', 'Job Title', 'Telephone', 'Fax', 'Mobile', 'Email',
             'Main Contact (Y/N)', 'Accounts Contact (Y/N)', 'Company Address', 'Notes', 'Contact Owner',

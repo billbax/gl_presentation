@@ -3,18 +3,19 @@ import conversion.conversion_defaults.remapping_dicts as remapping_dicts
 import conversion.conversion_defaults.fill_columns as fill_columns
 import conversion.conversion_functions.format_columns as conv_funcs
 import conversion.conversion_functions.create_dataframes as create_df
+from conversion.conversion_functions.isin_check import isin_check
 from excel_writer.excel_writer_class import ExcelWriter
 
 CMAP_PLACEHOLDERS = ["1000 (Cmap)", "1001 (Cmap)"]
 
 
 class PurchaseInvoices:
-    def __init__(self, client_data, file_path):
+    def __init__(self, client_data, project_validation, file_path):
         # Create the purchase invoices dataframe required by the import tool from the lists of default import columns
         self.purchase_inv_df = create_df.create_import_template(columns=import_columns.PURCHASE_COL)
 
         # Extract the purchase invoice data from the client data sheet received
-        self.purchase_data_rec = create_df.read_sheet(data=client_data, sheet_name="Project Number")
+        self.purchase_data_rec = create_df.read_sheet(data=client_data, sheet_name="Purchase Invoices")
 
         # Remove all CMap example rows based on (Cmap) cell identifier
         self.purchase_data_rec = create_df.remove_placeholders(data=self.purchase_data_rec, column_header="Project Number",
@@ -26,6 +27,10 @@ class PurchaseInvoices:
 
         # Fill any null mandatory columns using the placeholder dict from fill_columns
         self.purchase_inv_df = conv_funcs.fill_columns(df=self.purchase_inv_df, fill_column_dict=fill_columns.NULL_PURCHASE_INV)
+
+        # Check if project included in projects sheet received
+        self.purchase_inv_df = isin_check(df=self.purchase_inv_df, validation_df=project_validation,
+                                          check_cols=["Project"])
 
         # Export dataframes to excel
         ExcelWriter(file_path=file_path,

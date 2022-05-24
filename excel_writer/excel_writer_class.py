@@ -8,7 +8,7 @@ TODAY = datetime.today().strftime("%d.%m.%Y")
 
 
 class ExcelWriter:
-    def __init__(self, file_path, excel_file_name, dataframe_dict):
+    def __init__(self, file_path, excel_file_name, dataframe_dict, bypass_len_check=False):
         # Create a new directory and name it the current date
         try:
             os.makedirs(f"{file_path}/Data Import/{TODAY}")
@@ -16,7 +16,7 @@ class ExcelWriter:
             pass
 
         # Check if len of dataset is greater than 1. If False return
-        if len(list(dataframe_dict.items())[0][1]):
+        if len(list(dataframe_dict.items())[0][1]) or bypass_len_check:
             # Create excel writer in append mode if possible else create a new excel file
             try:
                 excel_writer = pd.ExcelWriter(f"{file_path}/Data Import/{TODAY}/{excel_file_name}.xlsx", engine="openpyxl", mode="a")
@@ -29,8 +29,8 @@ class ExcelWriter:
                 try:
                     dataframe_dict[sheet_name].style.applymap(func=colour_cells,
                                                               values_to_colour=colour_dict[sheet_name],
-                                                              values_to_highlight=highlight_dict[sheet_name])\
-                                                              .to_excel(excel_writer, sheet_name, index=False)
+                                                              values_to_highlight=highlight_dict[sheet_name]
+                                                              ).to_excel(excel_writer, sheet_name, index=False)
                 except KeyError:
                     dataframe_dict[sheet_name].to_excel(excel_writer, sheet_name, index=False)
 

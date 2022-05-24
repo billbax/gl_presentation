@@ -29,10 +29,10 @@ def open_xlsx_doc(file_name):
 
 # client_name = input("What is the clients name? ")
 
-Testing = True
+Testing = False
 
 if Testing:
-    client_name = "Ayre Chamberlain Gaunt"
+    client_name = "Calibro Consulting"
     file_path = f"C:/Users/Bill/Desktop/Clients/{client_name}"
     config_data = pd.ExcelFile("Config.xlsx")
     system_df = pd.read_excel(config_data, sheet_name="Config")
@@ -40,7 +40,6 @@ else:
     client_name = input("What is the clients name? ")
     file_path = f"C:/Users/Bill/Desktop/Clients/{client_name}"
     system_df = create_driver(system_id=input("What is the clients sysadmin ID? "))
-    print(system_df["Internal Code"])
 
 
 # Open all client files to create a pandas instance that can be passed to the data_classes for conversion.
@@ -74,7 +73,7 @@ rate_cards = RateCards(client_data=live_proj_data, file_path=file_path)
 project_pos = ProjectPOs(client_data=live_proj_data, proj_data_rec=proj_details.proj_det_rec, file_path=file_path)
 
 project_time = ProjectTime(client_data=project_time_data, user_validation=users.users_df,
-                           stage_validation=project_fees.fe_section_df, file_path=file_path)
+                           stage_validation=project_fees.fe_section_df, file_path=file_path, system_data=system_df)
 
 internal_time = InternalTime(client_data=internal_time_data, user_validation=users.users_df, system_data=system_df,
                              file_path=file_path)
@@ -82,6 +81,8 @@ internal_time = InternalTime(client_data=internal_time_data, user_validation=use
 sales_invoices = SalesInvoices(client_data=sales_inv_data, project_validation=proj_details.proj_det_df,
                                stage_validation=project_fees.fe_section_df, file_path=file_path)
 
-purchase_invoices = PurchaseInvoices(client_data=purchase_inv_data, file_path=file_path)
+purchase_invoices = PurchaseInvoices(client_data=purchase_inv_data, project_validation=project_fees.fe_top_lvl_df,
+                                     file_path=file_path)
 
-expenses = Expenses(client_data=expenses_data, system_data=system_df, file_path=file_path)
+expenses = Expenses(client_data=expenses_data, system_data=system_df, project_validation=project_fees.fe_top_lvl_df,
+                    file_path=file_path)
