@@ -36,7 +36,7 @@ class SalesInvoices:
         # Fill any null mandatory columns using the placeholder dict from fill_columns
         self.invoice_breakdown_df = conv_funcs.fill_columns(df=self.invoice_breakdown_df, fill_column_dict=fill_columns.NULL_INV_DET)
 
-        # Check if project exists in project data received
+        # Check if project exists in project data received (invoice details tab)
         self.invoice_breakdown_df = isin_check(df=self.invoice_breakdown_df, validation_df=stage_validation,
                                                check_cols=["Project"])
 
@@ -81,6 +81,10 @@ class SalesInvoices:
         # Fill any null mandatory columns using the placeholder dict from fill_columns
         self.invoice_top_df = conv_funcs.fill_columns(df=self.invoice_top_df,
                                                       fill_column_dict=fill_columns.NULL_INV_TOP)
+
+        # Check if project exists in project data received (invoice top level tab)
+        self.invoice_top_df = isin_check(df=self.invoice_top_df, validation_df=stage_validation,
+                                         check_cols=["Project"])
 
         # Export dataframes to excel
         ExcelWriter(file_path=file_path,
