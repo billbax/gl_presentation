@@ -1,11 +1,12 @@
 import pandas as pd
+import tempfile
+import os
 from data_classes.users import Users
 from data_classes.holidays import Holidays
 from data_classes.holiday_allowance import HolidayAllowance
 from data_classes.comp_contacts import CompAndContacts
 from data_classes.internal_time import InternalTime
 from data_classes.project_time import ProjectTime
-
 from data_classes.expenses import Expenses
 from data_classes.purchase_invoices import PurchaseInvoices
 from data_classes.project_details import ProjectDetails
@@ -14,31 +15,38 @@ from data_classes.project_pos import ProjectPOs
 from data_classes.rate_cards import RateCards
 from data_classes.sales_invoices import SalesInvoices
 from validations.web_scraper import create_driver
+from send_email.send_email import send_email
 
 
 def open_xlsx_doc(file_name):
     """Follow file path and locate file matching the file_name passed. If no file found, print warning & return empty form
      to allow continuation of the script"""
     try:
-        return pd.ExcelFile(f"{file_path}/Data Received/{file_name}")
+        return pd.ExcelFile(f"{read_path}/Data Received/{file_name}")  # Todo Change to accept files rather than directory
 
     except FileNotFoundError:
         print(f"{file_name} not present")
         return pd.ExcelFile(f".//placeholder_files/{file_name}")
 
 
-# client_name = input("What is the clients name? ")
-
-Testing = False
+Testing = True
 
 if Testing:
-    client_name = "Calibro Consulting"
-    file_path = f"C:/Users/Bill/Desktop/Clients/{client_name}"
+    client_name = "zz Test"
+    read_path = f"C:/Users/Bill/Desktop/Clients/{client_name}"  # Todo Change to accept files rather than directory
+    file_temp_direct = tempfile.TemporaryDirectory()
+    file_temp_dir_name = file_temp_direct.name
+    file_path = file_temp_dir_name
+
     config_data = pd.ExcelFile("Config.xlsx")
     system_df = pd.read_excel(config_data, sheet_name="Config")
 else:
     client_name = input("What is the clients name? ")
-    file_path = f"C:/Users/Bill/Desktop/Clients/{client_name}"
+    read_path = f"C:/Users/Bill/Desktop/Clients/{client_name}"  # Todo Change to accept files rather than directory
+    file_temp_direct = tempfile.TemporaryDirectory()
+    file_temp_dir_name = file_temp_direct.name
+    file_path = file_temp_dir_name
+
     system_df = create_driver(system_id=input("What is the clients sysadmin ID? "))
 
 
@@ -86,3 +94,5 @@ purchase_invoices = PurchaseInvoices(client_data=purchase_inv_data, project_vali
 
 expenses = Expenses(client_data=expenses_data, system_data=system_df, project_validation=project_fees.fe_top_lvl_df,
                     file_path=file_path)
+
+send_email(temporary_directory=file_temp_dir_name, to_addr="usert6310@gmail.com")

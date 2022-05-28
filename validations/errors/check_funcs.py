@@ -1,11 +1,8 @@
 from validations.errors.error_msgs import error_dict
-from datetime import datetime
-
-TODAY = datetime.today().strftime("%d.%m.%Y")
 
 
 def check_for_placeholders(check_type, df, file_path, class_name=""):
-    txt_file = open(f"{file_path}/Data Import/{TODAY}/Errors.txt", "a")
+    txt_file = open(f"{file_path}/Errors.txt", "a")
 
     if class_name != "":
         txt_file.write(f"\n\n{class_name}")
@@ -22,7 +19,7 @@ def check_for_placeholders(check_type, df, file_path, class_name=""):
 
 
 def non_config_data(df, system_data, columns, file_path):
-    txt_file = open(f"{file_path}/Data Import/{TODAY}/Errors.txt", "a")
+    txt_file = open(f"{file_path}/Errors.txt", "a")
 
     for column in columns:
         config_set = system_data[column].tolist()
