@@ -11,7 +11,7 @@ NULL_FE_SECT = {"Tab Name": "Project Fees", "Probability": "100.00", "Locked": "
 
 NULL_FE_TASK = {"Tab Name": "Project Fees", "Approved": "N", "Locked": "N", "Expense Retention": "0.00",
                 "Retention": "0.00", "Percentage Complete": "0.00", "Start Date": "01 JANUARY 2022",
-                "Duration": "1.00", "Probability": "100.00", "Workstage Fee Type": "FIXED FEE", "Our Fee": "0.00"}
+                "Duration": 1.00, "Probability": "100.00", "Workstage Fee Type": "FIXED FEE", "Our Fee": "0.00"}
 
 NULL_FE_EXT = {"Tab Name": "Project Fees", "Billing Type": "BILL AS SCHEDULED", "External Type": "Consultant"}
 
