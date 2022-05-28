@@ -27,7 +27,7 @@ highlight_dict = {
     "Holidays": ["Holiday"],
     "Budget Rates": [],
     "Timesheets": ["No", "NON-CHARGEABLE ADMIN"],
-    "Sales Invoices": ["INVOICED"],
+    "Sales Invoices": ["INVOICED", "No"],
     "Sales Invoices Detail": ["No"],
     "Expenses": ["No", "Retention", "Pre-CMap"],
     "Fee Estimator": ["Budget", "Simple"],
