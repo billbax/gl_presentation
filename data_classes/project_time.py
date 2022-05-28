@@ -76,7 +76,7 @@ class ProjectTime:
                         }
                     )
 
-        if len(self.user_fig_df["Person"].tolist()) < 0:
+        if len(self.user_fig_df["Person"].tolist()) > 0:
             ExcelWriter(bypass_len_check=True,
                         file_path=file_path,
                         excel_file_name="5. Project Time User Figures",
