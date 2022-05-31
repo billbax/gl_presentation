@@ -1,37 +1,48 @@
+import os
+import tempfile
+from zipfile import ZipFile
 from smtplib import SMTP
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
-from email import encoders
-import os
+from email.mime.application import MIMEApplication
 
 
-def send_email(temporary_directory, to_addr):
+def send_email(temporary_directory, to_addr, client):
+    # Create a zip file containing all the files created
+    zip_file = save_files_to_zip(temporary_directory=temporary_directory)
+
+    #
     gmail = "cmapbuildcompletion@gmail.com"
     gmail_pw = "fy6472395**jsf2"
-    to = [to_addr]
+    to = ["usert6310@gmail.com", to_addr]
 
+    # Create a message template for the email
     message = MIMEMultipart()
+    message["Subject"] = f"Import sheets for {client}"
+    message.attach(MIMEText("Attached zip file contains all data ready for import\n\nBill", "plain"))
+    # Attach zip_file to the email
+    with open(zip_file, "rb") as file:
+        message.attach(MIMEApplication(file.read(), Name="Files.zip"))
+        file.close()
 
-    message.attach(MIMEText("Contents of the email", "plain"))
-    all_files = os.listdir(f"{temporary_directory}")
-
-    for file in all_files:
-        attach_file_name = f"{temporary_directory}/{file}"
-        attach_file = open(attach_file_name, "rb")
-        payload = MIMEBase("application", "octate-stream")
-        payload.set_payload((attach_file).read())
-        encoders.encode_base64(payload)
-        payload.add_header("Content-Disposition", "attachment", filename=file)
-        message.attach(payload)
-        attach_file.close()
-
-    text = message.as_string()
-
+    # Login and send email
     with SMTP("smtp.gmail.com") as connection:
         connection.starttls()
         connection.login(user=gmail, password=gmail_pw)
         # msg = f"Subject:File Sending Test\n\nContent"
-        connection.sendmail(gmail, to, text)
+        connection.sendmail(gmail, to, message.as_string())
         print("Email Has Been Sent.")
         connection.quit()
+
+
+def save_files_to_zip(temporary_directory):
+    all_files = os.listdir(temporary_directory)
+
+    zip_temp_dir = tempfile.TemporaryDirectory()
+    zip_temp_dir_name = zip_temp_dir.name
+
+    zip_obj = ZipFile(f"{zip_temp_dir_name}/Files.zip", "w")
+    for file in all_files:
+        zip_obj.write(filename=f"{temporary_directory}/{file}", arcname=file)
+
+    return f"{zip_temp_dir_name}/Files.zip"
