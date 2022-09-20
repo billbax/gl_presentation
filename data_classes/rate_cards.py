@@ -26,9 +26,12 @@ class RateCards:
         # Fill any null mandatory columns using the placeholder dict from fill_columns
         self.rates_df = conv_funcs.fill_columns(df=self.rates_df, fill_column_dict=fill_columns.NULL_RATES)
 
+        # Rename 'Rate Card Name' & 'Default Rate Card' to be accepted by import tool
+        self.rates_df.rename({"Default": "Default Rate Card", "Rate Name": "Rate Card Name"})
+
         # Export dataframes to excel
         ExcelWriter(file_path=file_path,
-                    excel_file_name="4. Rate Cards",
+                    excel_file_name="04. Rate Cards",
                     dataframe_dict={
                         "Budget Rates": self.rates_df,
                         }

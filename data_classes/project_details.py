@@ -39,6 +39,15 @@ class ProjectDetails:
         self.proj_det_df = conv_funcs.fill_columns(df=self.proj_det_df, fill_column_dict=fill_columns.NULL_PROJ_DET)
 
         # If project 'Status' == 'Live Project', populate 'Won By' & 'Date Won' columns
+        self.proj_det_df["Won By"].where(self.proj_det_df["Status"] != "Live Project",
+                                         self.proj_det_df["Project Manager"], inplace=True)
+        self.proj_det_df["Date Won"].where(self.proj_det_df["Status"] != "Live Project",
+                                           self.proj_det_df["Start Date"], inplace=True)
+
+        self.proj_det_df["Won By"].where(self.proj_det_df["Status"] != "Closed Project",
+                                         self.proj_det_df["Project Manager"], inplace=True)
+        self.proj_det_df["Date Won"].where(self.proj_det_df["Status"] != "Closed Project",
+                                           self.proj_det_df["Start Date"], inplace=True)
 
         # If project 'Status' == 'Closed Project', populate 'Closed By' & 'Date Closed' columns
         self.proj_det_df["Closed By"].where(self.proj_det_df["Status"] != "Closed Project",
@@ -76,7 +85,7 @@ class ProjectDetails:
                     )
 
         ExcelWriter(file_path=file_path,
-                    excel_file_name="8. Custom Fields",
+                    excel_file_name="08. Custom Fields",
                     dataframe_dict={
                         "Project - Custom Fields": self.project_custom_fields.cf_df,
                         }

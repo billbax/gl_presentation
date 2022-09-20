@@ -2,7 +2,7 @@ colour_dict = {
     "Users": ["Y", "N", "Academy Only", "GBP"],
     "User Figures": [],
     "Company": ["Pending", "N"],
-    "Contact": ["Pending", "N"],
+    "Contacts": ["Pending", "N"],
     "Holidays": ["Holiday"],
     "Budget Rates": ["N", "0"],
     "Timesheets": ["Pending", "Project Fees"],
@@ -23,7 +23,7 @@ highlight_dict = {
     "Users": ["My First User", "placeholder@cmap.com", "NON-CHARGEABLE ADMIN", "0.00", "No", "EMPLOYEE"],
     "User Figures": ["No", "0.00"],
     "Company": ["PENDING"],
-    "Contact": ["PENDING"],
+    "Contacts": ["PENDING"],
     "Holidays": ["Holiday"],
     "Budget Rates": [],
     "Timesheets": ["No", "NON-CHARGEABLE ADMIN"],
@@ -36,6 +36,4 @@ highlight_dict = {
     "Fee Estimator Tasks": ["FIXED FEE", "100.00", "0.00", "1.00"],
     "Fee Estimator Externals": ["BILL AS SCHEDULED"],
     "Projects": ["No", "LIVE PROJECT", "Pre-CMap", "My First User"],
-
-
                 }

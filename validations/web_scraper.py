@@ -74,7 +74,6 @@ def create_driver(system_id):
     config_df = pd.DataFrame({k: pd.Series(v) for k, v in d.items()})
     config_df.rename({"Admins": "Person", "expense_categories": "Category", "internal_codes": "Internal Code",
                       "Project_Type": "Project Type"}, axis=1, inplace=True)
-
     return config_df
 
 

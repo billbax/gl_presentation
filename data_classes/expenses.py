@@ -9,7 +9,7 @@ import validations.errors.check_funcs as check_funcs
 from validations.errors import error_checks
 
 
-CMAP_PLACEHOLDERS = ["1000 (Cmap)", "1001 (Cmap)"]
+CMAP_PLACEHOLDERS = ["1000 (Cmap)", "1001 (Cmap)", "21007 (Cmap)", "21006 (Cmap)"]
 
 
 class Expenses:

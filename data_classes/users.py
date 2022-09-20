@@ -10,7 +10,9 @@ from excel_writer.excel_writer_class import ExcelWriter
 import validations.errors.check_funcs as check_funcs
 from validations.errors import error_checks
 
-CMAP_PLACEHOLDERS = ["James Carr (Cmap)", "Sarah Jackson (Cmap)", "Danielle Bates (Cmap)", "Daniel May (Cmap)"]
+CMAP_PLACEHOLDERS = ["James Carr (Cmap)", "Sarah Jackson (Cmap)", "Danielle Bates (Cmap)", "Daniel May (Cmap)",
+                     "William Baxter (Cmap)", "Historic User (Cmap)", "Daniel (Cmap) May", "Danielle (Cmap) Bates", "James (Cmap) Carr",
+                     "Sarah (Cmap) Jackson"]
 
 
 class Users:
@@ -27,7 +29,7 @@ class Users:
         self.user_data_rec["First Name"] = self.user_data_rec["First Name"].str.strip()
         self.user_data_rec["Last Name"] = self.user_data_rec["Last Name"].str.strip()
 
-        # Concatenate first/last name to create a 'Person' to allow validation/merges in other classes
+        # Concatenate first/last name to create a 'Person' to allow validation/merges with other classes
         self.user_data_rec["Person"] = self.user_data_rec[["First Name", "Last Name"]]\
             .apply(lambda row: " ".join(row.values.astype(str)), axis=1)
 
@@ -72,7 +74,7 @@ class Users:
 
         # Export dataframes to excel
         ExcelWriter(file_path=file_path,
-                    excel_file_name="1. Users",
+                    excel_file_name="01. Users",
                     dataframe_dict={
                         "Users": self.users_df,
                         "User Figures": self.user_fig_df,
@@ -82,7 +84,7 @@ class Users:
                     )
 
         ExcelWriter(file_path=file_path,
-                    excel_file_name="8. Custom Fields",
+                    excel_file_name="08. Custom Fields",
                     dataframe_dict={
                         "User - Custom Fields": self.user_custom_fields.cf_df,
                         }

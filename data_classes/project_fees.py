@@ -29,7 +29,7 @@ class ProjectFees:
         # Remove all CMap example rows based on (Cmap) cell identifier
         self.fee_data_received = create_df.remove_placeholders(data=self.fee_data_received, column_header="Project Number",
                                                                placeholders=CMAP_PLACEHOLDERS)
-        self.external_data_received = create_df.remove_placeholders(data=self.externals_data_received, column_header="project Number",
+        self.external_data_received = create_df.remove_placeholders(data=self.externals_data_received, column_header="Project Number",
                                                                     placeholders=CMAP_PLACEHOLDERS)
 
         # Remap the columns received into the dataframes for import using the dicts in remapping_dict

@@ -9,7 +9,7 @@ from excel_writer.excel_writer_class import ExcelWriter
 import validations.errors.check_funcs as check_funcs
 from validations.errors import error_checks
 
-CMAP_PLACEHOLDERS = ["CMAP Software (Cmap)", "XYZ Ltd (Cmap)", "ABC Plc (Cmap)"]
+CMAP_PLACEHOLDERS = ["CMAP Software (Cmap)", "XYZ Ltd (Cmap)", "ABC Plc (Cmap)", "Dentons (Cmap)"]
 
 
 class CompAndContacts:
@@ -51,7 +51,7 @@ class CompAndContacts:
 
         # Export dataframes to excel
         ExcelWriter(file_path=file_path,
-                    excel_file_name="2. Companies & Contacts",
+                    excel_file_name="02. Companies & Contacts",
                     dataframe_dict={
                         "Company": self.company_df,
                         "Contacts": self.contact_df,
@@ -59,7 +59,7 @@ class CompAndContacts:
                     )
 
         ExcelWriter(file_path=file_path,
-                    excel_file_name="8. Custom Fields",
+                    excel_file_name="08. Custom Fields",
                     dataframe_dict={
                         "Account - Custom Fields": self.company_custom_fields.cf_df,
                         "Contact - Custom Fields": self.contact_custom_fields.cf_df,

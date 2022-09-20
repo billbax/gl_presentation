@@ -11,10 +11,7 @@ def send_email(temporary_directory, to_addr, client):
     # Create a zip file containing all the files created
     zip_file = save_files_to_zip(temporary_directory=temporary_directory)
 
-    #
-    gmail = "cmapbuildcompletion@gmail.com"
-    gmail_pw = "fy6472395**jsf2"
-    to = ["usert6310@gmail.com", to_addr]
+    to = ["bill.baxter@cmap-software.com", to_addr]
 
     # Create a message template for the email
     message = MIMEMultipart()
@@ -28,9 +25,9 @@ def send_email(temporary_directory, to_addr, client):
     # Login and send email
     with SMTP("smtp.gmail.com") as connection:
         connection.starttls()
-        connection.login(user=gmail, password=gmail_pw)
+        connection.login(user=os.environ["GMAIL"], password=os.environ["GMAIL_PW"])
         # msg = f"Subject:File Sending Test\n\nContent"
-        connection.sendmail(gmail, to, message.as_string())
+        connection.sendmail(os.environ["GMAIL"], to, message.as_string())
         print("Email Has Been Sent.")
         connection.quit()
 

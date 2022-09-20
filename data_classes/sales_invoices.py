@@ -88,7 +88,7 @@ class SalesInvoices:
 
         # Export dataframes to excel
         ExcelWriter(file_path=file_path,
-                    excel_file_name="6. Sales Invoices",
+                    excel_file_name="06. Sales Invoices",
                     dataframe_dict={
                         "Sales Invoices": self.invoice_top_df,
                         "Sales Invoices Detail": self.invoice_breakdown_df,

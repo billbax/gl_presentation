@@ -9,7 +9,7 @@ from excel_writer.excel_writer_class import ExcelWriter
 import validations.errors.check_funcs as check_funcs
 from validations.errors import error_checks
 
-CMAP_PLACEHOLDERS = ["James Carr (Cmap)", "Sarah Jackson (Cmap)", "Danielle Bates (Cmap)", "Daniel May (Cmap)"]
+CMAP_PLACEHOLDERS = ["21006 (Cmap)", "1000 (Cmap)"]
 
 
 class ProjectTime:
@@ -22,7 +22,7 @@ class ProjectTime:
         self.time_user_figs_rec = create_df.read_sheet(data=client_data, sheet_name="User Figures")
 
         # Remove all CMap example rows based on (Cmap) cell identifier
-        self.project_time_rec = create_df.remove_placeholders(data=self.project_time_rec, column_header="Person",
+        self.project_time_rec = create_df.remove_placeholders(data=self.project_time_rec, column_header="Project Number",
                                                               placeholders=CMAP_PLACEHOLDERS)
 
         # Remap the columns received into the dataframes for import using the dicts in remapping_dicts
@@ -70,7 +70,7 @@ class ProjectTime:
 
         # Export dataframes to excel
         ExcelWriter(file_path=file_path,
-                    excel_file_name="5. Project Time",
+                    excel_file_name="05. Project Time",
                     dataframe_dict={
                         "Timesheets": self.project_time_df,
                         }
@@ -79,7 +79,7 @@ class ProjectTime:
         if len(self.user_fig_df["Person"].tolist()) > 0:
             ExcelWriter(bypass_len_check=True,
                         file_path=file_path,
-                        excel_file_name="5. Project Time User Figures",
+                        excel_file_name="05. Project Time User Figures",
                         dataframe_dict={
                             "Users": self.users_df,
                             "User Figures": self.user_fig_df,

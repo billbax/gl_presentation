@@ -21,5 +21,5 @@ def merge_dataframes(df, merge_data, merge_on, merge_cols, merge_col_dict=None, 
 
         df = df.merge(merge_df[pd.notnull(merge_df[merge_on])], on=merge_on, how="left")
         return df
-    except IndexError:
+    except:
         return df.columns([merge_cols])

@@ -27,9 +27,12 @@ class Holidays:
         # Fill any null mandatory columns using the placeholder dict from fill_columns
         self.holiday_df = conv_funcs.fill_columns(df=self.holiday_df, fill_column_dict=fill_columns.NULL_HOLIDAY)
 
+        # Rename 'Approved' time off to 'Y' to be accepted by import tool
+        self.holiday_df["Approved"].replace({"Y": "Approved"})
+
         # Export dataframes to excel
         ExcelWriter(file_path=file_path,
-                    excel_file_name="3. Holidays",
+                    excel_file_name="03. Holidays",
                     dataframe_dict={
                         "Holidays": self.holiday_df,
                         }

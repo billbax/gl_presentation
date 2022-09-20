@@ -6,7 +6,7 @@ import conversion.conversion_functions.create_dataframes as create_df
 from conversion.conversion_functions.isin_check import isin_check
 from excel_writer.excel_writer_class import ExcelWriter
 
-CMAP_PLACEHOLDERS = ["1000 (Cmap)", "1001 (Cmap)"]
+CMAP_PLACEHOLDERS = ["1000 (Cmap)", "1001 (Cmap)", "21006 (Cmap)", "21032 (Cmap)"]
 
 
 class PurchaseInvoices:

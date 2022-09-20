@@ -48,7 +48,7 @@ class InternalTime:
 
         # Export dataframes to excel
         ExcelWriter(file_path=file_path,
-                    excel_file_name="5. Internal Time",
+                    excel_file_name="05. Internal Time",
                     dataframe_dict={
                         "Timesheets": self.internal_time_df,
                         }
